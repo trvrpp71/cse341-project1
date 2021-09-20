@@ -1,0 +1,22 @@
+<%- include('includes/head.ejs') %>
+
+<%- include('includes/nav.ejs') %>
+
+    <h1>Enter book</h1>
+    <div class="form-control">
+        <form action="/add-book" method="POST">
+            <label for="booktitle">Title</label>
+            <input type="text" name="booktitle">
+            <label for="author">Author</label>
+            <input type="text" name="author">
+            <label for="description">Description</label>
+            <input type="text" name="description">
+            <label for="price">Price</label>
+            <input type="text" name="price">
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+    
+
+<%- include('includes/end.ejs') %>
+    

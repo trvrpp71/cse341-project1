@@ -1,0 +1,45 @@
+
+.form-control{
+    background-color: #3e71df;
+    border-radius: 5px;
+    border:1px solid black;
+}
+
+.form-control__row{
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+}
+
+.form-control__row > label {
+    padding: .5em 1em .5em 0;
+    flex:1;
+    font-size:1.2em;
+    text-align:right;
+    color:white;
+}
+
+.form-control__row > input {
+    flex:4;
+    font-size:1em;
+}
+
+.form-control__row > button {
+    width: 33%;
+    padding:0.35em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-size: 1em;
+    color:black;
+    text-align:center;
+    transition: all 0.2s;
+}
+
+.form-control__row > button:hover {
+    color:white;
+    background-color:#777474;
+    box-shadow: 5px 5px 10px black;
+    font-size:1.2em;
+    font-weight:700;
+}

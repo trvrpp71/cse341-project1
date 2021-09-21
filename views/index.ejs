@@ -1,20 +1,30 @@
 <%- include('includes/head.ejs') %>
 
-<%- include('includes/nav.ejs') %>
-
-    <h1>Book List</h1>
-
-    <% if (books.length >0) { %>
-        <ul>
+<!-- inlude additional style sheets here -->
+</head>
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h1 class="main-title">Book List</h1>
+        <% if (books.length >0) { %>
             <% books.forEach((book) => { %>
-                <li><%= book.title %></li>
-                <li><%= book.author %></li>
-                <li><%= book.description %></li>
-                <li><%= book.title %></li>
-            <% }) %>
-        </ul>
-    <% } else { %>
-        <h1>no books found</h1>
-    <% } %>
+                <%- console.log(book) %>
 
-    <%- include('includes/end.ejs') %>
+                <div class="main-list">
+                    <ul class="main-list__ul1">
+                        <li class="main-list__item-title"> <%= book.title %>
+                            <ul class="main-list__ul2">
+                                <li class="main-list_item">Author: <%= book.author %></li>
+                                <li class="main-list_item">Summary: <%= book.description %></li>
+                                <li class="main-list_item">Price: $<%= book.price %></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <img id="delete_btn" src="/images/delete_wh.png" alt="delete buttone">
+                </div>
+            <% }) %>
+        <% } else { %>
+            <h1 class="main-list__noItem">no books found</h1>
+        <% } %>
+
+<%- include('includes/end.ejs') %>

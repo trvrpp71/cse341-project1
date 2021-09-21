@@ -10,7 +10,10 @@ main{
     padding:1rem;
 }
 
-
+footer{
+    text-align: center;
+    font-size:.8em;
+}
 .main-header {
     margin:0 1rem;
     padding:1rem;
@@ -60,6 +63,9 @@ main{
     padding: 5px 0;
     font-weight: 400;
 }
+
+
+
 
 #delete_btn{
     display:block;

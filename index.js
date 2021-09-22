@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localh
 const app = express();
 
 const pr02Routes = require('./routes/pr02');
+const pr02aRoutes = require('./routes/pr02a');
 
 app
 
@@ -15,6 +16,7 @@ app
     .set('view engine', 'ejs')
     .use(bodyParser.urlencoded({ extended: false }))
     .use('/pr02', pr02Routes)
+    .use('/pr02a', pr02Routes)
     .get('/', (req, res, next) => {
         //primary index page, always handled last
         res.render('index', {

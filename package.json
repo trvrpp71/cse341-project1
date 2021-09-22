@@ -4,8 +4,8 @@
   "description": "week 1-6 ecommerce site projct",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node index.js",
+    "test": "nodemon index.js"
   },
   "repository": {
     "type": "git",

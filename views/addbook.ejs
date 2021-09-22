@@ -1,35 +1,4 @@
-<%- include('includes/head.ejs') %>
 
-    <link rel="stylesheet" href="/css/add-book.css" >
-</head>
-<body>
-    <%- include('includes/nav.ejs') %>
-    <main>
-        <h1>Add a book to the list</h1>
-        <div class="form-control">
-            <form action="/add-book" method="POST">
-                <div class="form-control__row">
-                    <label for="booktitle">Title</label>
-                    <input type="text" name="booktitle">
-                </div>
-                <!-- <div class="form-control__row">
-                    <label for="author">Author</label>
-                    <input type="text" name="author">
-                </div>
-                <div class="form-control__row">
-                    <label for="summary">Book Summary</label>
-                    <input type="text" name="summary">
-                </div>
-                <div class="form-control__row">
-                    <label for="price">Price</label>
-                    <input type="text" name="price">
-                </div> -->
-                <div class="form-control__row">
-                    <button type="submit">Add Book</button>
-                </div>
-                
-            </form>
-        </div>
     
 
 <%- include('includes/end.ejs') %>

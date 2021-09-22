@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const booksArray = ['harry potter', 'star wars', 'blah'];
+const booksArray = [];
 
 // router.post('/addBook', (req, res, next) => {
 //     booksArray.push( {
@@ -14,7 +14,7 @@ const booksArray = ['harry potter', 'star wars', 'blah'];
 // });
 
 
-router.get('/pr02', (req, res, next) => {
+router.get('/', (req, res, next) => {
     res.render('pr02', {
         pageTitle: 'Prove 02 Activity',
         path: '/pr02',

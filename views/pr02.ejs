@@ -8,16 +8,16 @@
         <h1 class="main-title">My Book List</h1>
 
         <% if (books.length > 0 ) { %>
-            <ul>
+            <ul class="main-list__ul">
             <% for (let book of books) { %> 
-                <li><%= book.title %> by <%= book.author %> | $<%= book.price %></li>
+                <li class="main-list__item"><%= book.title %> by <%= book.author %> | $<%= book.price %></li>
             <% } %>
             </ul>
         <% } else { %>
             <h1>there are no books in the list</h1>
         <% } %>
         
-        <a href="./pr02a">Add or remove a book from the list</a>
+        <a href="./pr02a">Add a book to the list</a>
         
 
 <%- include('includes/end.ejs') %>

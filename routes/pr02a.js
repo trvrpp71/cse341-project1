@@ -12,21 +12,22 @@ router.post('/addBook', (req,res,next)=> {
         author: req.body.author,
         price: req.body.price
     });
-    
-    console.log(booksArray.indexOf('test 1'));
     res.redirect('/pr02');
 })
 
-router.post('/remBook', (req,res,next)=> {
-    const remBook = req.body.remTitle;
-    console.log(remBook);
-    console.log(booksArray);
-    console.log(booksArray.indexOf(remBook));
+// router.post('/remBook', (req,res,next)=> {
+//     const remBook = req.body.remBook;
+//     // console.log(booksArray);
+//     // console.log(booksArray.indexOf('test1'));
+//     const key = array_search(remBook, booksArray);
 
-    //console.log(index);
+//     console.log(key);
+//     // array_splice($arr, $key, 1); // $arr is now array('red', 'green', 'yellow').
+
+//     //console.log(index);
     
-    res.redirect('/pr02');
-})
+//     res.redirect('/pr02');
+// })
 
 router.get('/', (req, res, next) => {
     res.render('pr02a', {

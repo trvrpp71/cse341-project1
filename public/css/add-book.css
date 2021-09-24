@@ -25,9 +25,9 @@
 }
 
 .form-control__row > button {
+    justify-content: center;
     width: 33%;
     padding:0.35em 1.2em;
-    margin:0 0.3em 0.3em 0;
     box-sizing: border-box;
     text-decoration:none;
     font-size: 1em;

@@ -33,51 +33,13 @@ footer{
     color:#2e2e2e
 }
 
-.main-list {
-    background-color: #3e71df;
-    padding:.5em;
-    margin: 10px 0;
-    color:black;
-    border-radius: 1em;
-    border:2px solid black;
-    box-shadow: 5px 5px 10px black;
-}
 
-.main-list__ul1{
+.main-list__ul{
     list-style: none;
 
 }
 
-.main-list__item-title{
-    font-size:1.25em;
-    padding:10px 0;
-    font-weight: 700;
-    color:white;
+.main-list__item {
+    padding: .3em;
 
-}
-.main-list__ul2{
-    list-style: none;
-}
-
-.main-list__ul2 > li{
-    padding: 5px 0;
-    font-weight: 400;
-}
-
-
-
-
-#delete_btn{
-    display:block;
-    margin:0 10px 10px 0;
-    position:relative;
-    top:-50px;
-    float:right;
-    color:white;
-    transition: all .2s;
-}
-
-#delete_btn:hover{
-    transform:scale(2);
-    cursor: pointer;
 }

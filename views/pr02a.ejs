@@ -7,27 +7,32 @@
     <main>
         <h1>Add a book to the list</h1>
         <div class="form-control">
-            <form action="/add-book" method="POST">
+            <form action="/pr02a/addBook" method="POST">
                 <div class="form-control__row">
-                    <label for="booktitle">Title</label>
-                    <input type="text" name="booktitle">
+                    <label for="title">Title</label>
+                    <input type="text" name="title">
                 </div>
-                <!-- <div class="form-control__row">
+                <div class="form-control__row">
                     <label for="author">Author</label>
                     <input type="text" name="author">
                 </div>
                 <div class="form-control__row">
-                    <label for="summary">Book Summary</label>
-                    <input type="text" name="summary">
-                </div>
-                <div class="form-control__row">
                     <label for="price">Price</label>
                     <input type="text" name="price">
-                </div> -->
-                <div class="form-control__row">
-                    <button type="submit">Add Book</button>
                 </div>
-                
+
+                <button type="submit">Add Book</button>
+            </form>
+
+            <p>If you'd like to remove a book enter the title here:</p>
+
+            <form action="/pr02a/remBook" method="POST">
+                <div class="form-control__row">
+                    <label for="remTitle">Title</label>
+                    <input type="text" name="remTitle">
+                </div>
+
+                <button type="submit">Remove Book</button>
             </form>
         </div>
 

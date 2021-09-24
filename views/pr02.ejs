@@ -6,17 +6,18 @@
     <%- include('includes/nav.ejs') %>
     <main>
         <h1 class="main-title">My Book List</h1>
-        <div class="main-list">
-            <% if (books.length > 0) { %>
-                <ul>
-                    <% for(book of books) { %>
-                    <li><%= book %></li>
-                    <% } %>
-                </ul>
-            <% } else { %>
-                <p>There are no books in the list</p>
+
+        <% if (books.length > 0 ) { %>
+            <ul>
+            <% for (let book of books) { %> 
+                <li><%= book.title %> by <%= book.author %> | $<%= book.price %></li>
             <% } %>
-        </div>
-        <a href="/pr02a">Add a book</a>
+            </ul>
+        <% } else { %>
+            <h1>there are no books in the list</h1>
+        <% } %>
+        
+        <a href="./pr02a">Add or remove a book from the list</a>
+        
 
 <%- include('includes/end.ejs') %>

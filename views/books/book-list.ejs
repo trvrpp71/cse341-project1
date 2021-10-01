@@ -16,15 +16,11 @@
                                     </h1>
                                 </header>
                                 <div class="card__content">
-                                    <h2 class="book__author">$
-                                        <%= book.author %>
-                                    </h2>
-                                    <h2 class="book__price">$
-                                        <%= book.price %>
-                                    </h2>
-                                    <p class="book__description">
-                                        <%= book.description %>
-                                    </p>
+                                    <ul class="book_list">
+                                        <li>Author: <%= book.author %></li>
+                                        <li>Summary:<%= book.summary %></li>
+                                        <li>Price: $<%= book.price %></li>
+                                    </ul>
                                 </div>
                              </article>
                             <% } %>
@@ -35,6 +31,7 @@
 
                     <div class="btn">
                         <a href="/add-book">Add a book</a>
+                        <a href="/del-book">Delete a book</a>
                     </div>
             </main>
             <%- include('../includes/end.ejs') %>

@@ -12,12 +12,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-const bookRoutes = require('./routes/books');
-const adminRoutes = require('./routes/admin');
+const pr02Route = require('./routes/pr02');
+const pr02aRoute = require('./routes/pr02a');
 
-app.use(bookRoutes);
-app.use(adminRoutes);
-
+app.use('/pr02', pr02Route);
+app.use('/pr02a',pr02aRoute.routes);
 
 app.get('/', (req, res, next) => {
         //primary index page, always handled last

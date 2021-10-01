@@ -8,8 +8,6 @@ const router = express.Router();
 
 const booksData = require('./pr02a');
 
-
-
 router.get('/', (req, res, next) => {
     const books = booksData.books;
     res.render('pr02', {

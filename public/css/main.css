@@ -1,5 +1,5 @@
 
-body{
+/* body{
     font-family: sans-serif;
     padding:0;
     margin:auto;
@@ -42,4 +42,9 @@ footer{
 .main-list__item {
     padding: .3em;
 
+} */
+
+.btn {
+    width:25%;
 }
+

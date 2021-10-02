@@ -1,0 +1,25 @@
+[{
+	"id": "0.123245",
+	"title": "A Book",
+	"imageUrl": "https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg",
+	"description": "This is an awesome book!",
+	"price": "19"
+}, {
+	"id": "0.5949052307050036",
+	"title": "A thing",
+	"imageUrl": "/images/products/ty-ls1.jpg",
+	"description": "this is my image of a thing",
+	"price": "25.22"
+}, {
+	"id": "0.13098178967974627",
+	"title": "Another something",
+	"imageUrl": "/images/products/TY-LS2.jpg",
+	"description": "this was shot on location by myself",
+	"price": "19.99"
+}, {
+	"id": "0.08351465195616803",
+	"title": "A Little Thing",
+	"imageUrl": "/images/products/TY-LS5.jpg",
+	"description": "this is really something to behold because it's super special",
+	"price": "100.00"
+}]

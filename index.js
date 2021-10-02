@@ -12,12 +12,20 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-const bookRoutes = require('./routes/books');
+
+/******************************the following is for Prove Week 02 **************************** */
+const pr02BookRoutes = require('./routes/pr02Books');
+const pr02AdminRoutes = require('./routes/pr02Admin');
+
+app.use(pr02BookRoutes);
+app.use(pr02AdminRoutes);
+/********************************************************************************************* */
+
 const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-app.use(bookRoutes);
-app.use(adminRoutes);
-
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 app.get('/', (req, res, next) => {
         //primary index page, always handled last

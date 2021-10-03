@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
-const adminController = require('../controllers/pr02Admin');
+const adminController = require('../../controllers/pr02/pr02Admin');
 
 const router = express.Router();
 

@@ -1,18 +1,18 @@
-const Book = require('../models/book')
+const Book = require('../../models/pr02/book')
 
 exports.getAddbook = (req, res, next) => {
-    res.render('admin/add-book', {
+    res.render('/PR02/admin/add-book', {
         pageTitle: 'Add Book',
-        path: 'admin/add-book',
+        path: '/PR02/admin/add-book',
     });
 };
 
 exports.getDelBook = (req, res, next) => {
     Book.fetchAll(books => {
-        res.render('admin/del-book', {
+        res.render('/PR02/admin/del-book', {
             books: books,
             pageTitle: 'Delete Book',
-            path: 'admin/del-book',
+            path: '/PR02/admin/del-book',
         });
     });
 };

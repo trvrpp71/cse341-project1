@@ -14,8 +14,8 @@ app.set('views', path.join(__dirname, 'views'))
 
 
 /******************************the following is for Prove Week 02 **************************** */
-const pr02BookRoutes = require('./routes/pr02Books');
-const pr02AdminRoutes = require('./routes/pr02Admin');
+const pr02BookRoutes = require('./routes/pr02/pr02Books');
+const pr02AdminRoutes = require('./routes/pr02/pr02Admin');
 
 app.use(pr02BookRoutes);
 app.use(pr02AdminRoutes);

@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
-const bookController = require('../controllers/pr02Books');
+const bookController = require('../../controllers/pr02/pr02Books');
 
 const router = express.Router();
 

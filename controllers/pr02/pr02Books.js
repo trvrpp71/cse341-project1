@@ -1,11 +1,11 @@
-const Book = require('../models/book');
+const Book = require('../../models/pr02/book');
 
 exports.getBooks = (req, res, next) => {
     Book.fetchAll(books => {
-        res.render('books/book-list', {
+        res.render('./PR02/books/book-list', {
             books: books,
             pageTitle: 'All Books',
-            path: '/books'
+            path: 'PR02/books'
         });
     });
 };

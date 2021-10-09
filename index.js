@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require ('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
-const cors = requires('cors');
+const cors = require('cors');
 
 
 const corsOptions = {

@@ -1,0 +1,37 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="../css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav.ejs') %>
+
+            <main>
+                <% if (books.length > 0) { %>
+                    <div class="grid">
+                        <% for (let book of books) { %>
+                            <article class="card product-item">
+                                <header class="card__header">
+                                    <h1 class="book__title">
+                                        <%= book.title %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <ul class="book_list">
+                                        <li>Author: <%= book.author %></li>
+                                        <li>Summary:<%= book.summary %></li>
+                                        <li>Price: $<%= book.price %></li>
+                                    </ul>
+                                </div>
+                             </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No Books Found!</h1>
+                    <% } %>
+
+                    <div class="btn">
+                        <a href="/add-book">Add a book</a>
+                        <a href="/del-book">Delete a book</a>
+                    </div>
+            </main>
+            <%- include('../includes/end.ejs') %>

@@ -1,6 +1,18 @@
 const express = require('express');
 const bodyParser = require ('body-parser');
 const path = require('path');
+const mongoose = require('mongoose');
+const cors = requires('cors');
+
+
+const corsOptions = {
+  origin: "https://vast-shore-53604.herokuapp.com/",
+  optionsSuccessStatus: 200
+};
+
+const User = require('./models/proveModels/PR04/user');
+
+const MONGODB_URL = process.evn.MONGODB_URL || "mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true"
 
 const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localhost:5000
 
@@ -9,37 +21,49 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(cors(corsOptions))
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 
-/******************************the following is for Prove Week 02 **************************** */
-const pr02BookRoutes = require('./routes/pr02/pr02Books');
-const pr02AdminRoutes = require('./routes/pr02/pr02Admin');
+app.use((req, res, next) => {
+    User.findById('6161d83b50679b6f4a99602a')
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
+  });
 
-app.use(pr02BookRoutes);
-app.use(pr02AdminRoutes);
-/********************************************************************************************* */
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
 
-app.get('/', (req, res, next) => {
-        //primary index page, always handled last
-        res.render('index', {
-            pageTitle: "Home", 
-            path: '/',
-        });
-    })
+const routes = require('./routes');
 
-app.use((req,res,next) => {
-    res.render('404error', {
-        pageTitle: '404 - Page Not Found',
-        path: req.url
-    });
-})
+app.use('/', routes);
 
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+mongoose
+  .connect(MONGODB_URL, options)
+    // 'mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true')
+    // .then(result => {
+    //   User.findOne().then(user =>{
+    //     if (!user) {
+    //       const user = new User({
+    //         name:'test_user',
+    //         email: 'test@test.com',
+    //         cart: {
+    //           items: []
+    //         }
+    //       });
+    //       user.save();
+    //     }
+    // })   
+
+
+    .then(result => {app.listen(PORT, () => console.log(`Listening on ${ PORT }`)) })
+    .catch(err => {console.log(err) });
+
+  
+

@@ -12,7 +12,7 @@ const corsOptions = {
 
 const User = require('./models/proveModels/PR04/user');
 
-const MONGODB_URL = process.evn.MONGODB_URL || "mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true"
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true"
 
 const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localhost:5000
 

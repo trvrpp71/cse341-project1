@@ -45,7 +45,7 @@ app.use('/', routes);
 
 
 mongoose
-  .connect(MONGODB_URL, options)
+  .connect(MONGODB_URL)
     // 'mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true')
     // .then(result => {
     //   User.findOne().then(user =>{

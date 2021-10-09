@@ -10,7 +10,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-// const User = require('./models/proveModels/PR04/user');
+const User = require('./models/proveModels/PR04/user');
 
 const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true"
 
@@ -46,24 +46,23 @@ app.use('/', routes);
 
 mongoose
   .connect(MONGODB_URL)
-    // 'mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true')
-    // .then(result => {
-    //   User.findOne().then(user =>{
-    //     if (!user) {
-    //       const user = new User({
-    //         name:'test_user',
-    //         email: 'test@test.com',
-    //         cart: {
-    //           items: []
-    //         }
-    //       });
-    //       user.save();
-    //     }
-    // })   
+  .then(result => {
 
-
-    .then(result => {app.listen(PORT, () => console.log(`Listening on ${ PORT }`)) })
-    .catch(err => {console.log(err) });
+      User.findOne().then(user => {
+        if (!user) {
+          const user = new User({
+            name:'test_user',
+            email: 'test@test.com',
+            cart: {
+              items: []
+            }
+          });
+          user.save();
+        }
+    })
+    app.listen(PORT);
+  })   
+ .catch(err => {console.log(err) });
 
   
 

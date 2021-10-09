@@ -10,7 +10,11 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-const User = require('./models/proveModels/PR04/user');
+const routes = require('./routes');
+
+const User = require('./models/proveModels/pr04/user');
+
+
 
 const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://tp_test:canuck01@cluster0.uei8q.mongodb.net/shop?retryWrites=true"
 
@@ -37,9 +41,6 @@ app.use((req, res, next) => {
   });
 
 
-
-
-const routes = require('./routes');
 
 app.use('/', routes);
 

@@ -4,9 +4,9 @@ const router = express.Router();
 
 const productController = require('../../controllers/teamControllers/TA03/products');
 
-router.get('/ta3_main', productController.getProduct);
+router.get('/TA03', productController.getProduct);
 
-router.get('/search', productController.getFilteredProduct);
+// router.get('/search', productController.getFilteredProduct);
 
 
   

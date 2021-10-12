@@ -4,10 +4,11 @@ const Order = require('../../../models/proveModels/order');
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('./prove/PR04/shop/product-list', {
+      res.render('./prove/PR05/shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
-        path: '/products'
+        path: '/products',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -20,10 +21,11 @@ exports.getProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then(product => {
-      res.render('./prove/PR04/shop/product-detail', {
+      res.render('./prove/PR05/shop/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/products'
+        path: '/products',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -32,10 +34,11 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('./prove/PR04/index', {
+      res.render('./prove/PR05/index', {
         prods: products,
         pageTitle: 'Shop Home',
-        path: '/shop'
+        path: '/shop',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -48,10 +51,11 @@ exports.getCart = (req, res, next) => {
     .populate('cart.items.productId')
     .then(user => {
       const products = user.cart.items;
-      res.render('./prove/PR04/shop/cart', {
-        path: '/cart_04',
+      res.render('./prove/PR05/shop/cart', {
+        path: '/cart_05',
         pageTitle: 'Your Cart',
-        products: products
+        products: products,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -65,7 +69,7 @@ exports.postCart = (req, res, next) => {
     })
     .then(result => {
       console.log(result);
-      res.redirect('/cart_04');
+      res.redirect('/cart_05');
     });
  };
 
@@ -74,7 +78,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
   req.user
     .removeFromCart(prodId)
     .then(result => {
-      res.redirect('/cart_04');
+      res.redirect('/cart_05');
     })
     .catch(err => console.log(err));
 };
@@ -101,9 +105,10 @@ exports.postOrder = (req, res, next) => {
       return req.user.clearCart(); 
     })
     .then(() => {
-      res.render('./prove/PR04/shop/order_ack', {
+      res.render('./prove/PR05/shop/order_ack', {
         pageTitle: 'Thank you',
-        path:'/main_04'  
+        path:'/main_05',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -112,10 +117,11 @@ exports.postOrder = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
     Order.find({ 'user.userId': req.user._id})
       .then(orders => {  
-        res.render('./prove/PR04/shop/orders', {
+        res.render('./prove/PR05/shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders
+        orders: orders,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));

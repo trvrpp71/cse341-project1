@@ -1,0 +1,63 @@
+
+
+<header class="d-flex justify-content-center py-3">
+    <div class="container">
+        <nav class="navbar ">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link <%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= path === '/shop' ? 'active' : '' %>" href="/main_05">Shop Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= path === '/products' ? 'active' : '' %>" href="/products_05">Products</a>
+                </li>
+
+                <% if (isAuthenticated) { %>
+
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/cart' ? 'active' : '' %>" href="/cart_05">Cart</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/orders' ? 'active' : '' %>" href="/orders_05">Orders</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product_05">Add Product
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products_05">Edit/Delete Items
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+
+            <ul class="nav nav-pills">
+                <% if (!isAuthenticated) { %>
+                    <li class="nav-item">
+                        <!-- <form action="/login" method="GET">
+                            <button class="btn btn-secondary-outline">Login</button>
+                        </form> -->
+                        <a class="nav-link <%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                    </li>
+                        
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <form action="/logout" method="POST">
+                            <button class="btn btn-secondary-outline">Logout</button>
+                        </form>
+                    </li>
+                <% } %> 
+            </ul>
+        </nav>
+    </div>
+</header>
+

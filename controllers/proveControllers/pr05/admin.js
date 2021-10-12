@@ -1,10 +1,12 @@
 const Product = require('../../../models/proveModels/product');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('./prove/PR04/admin/edit-product', {
-    pageTitle: 'Add Product wk4',
+
+  res.render('./prove/PR05/admin/edit-product', {
+    pageTitle: 'Add Product wk5',
     path: '/add-product',
-    editing: false
+    editing: false,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
 
@@ -18,14 +20,12 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user._id
+    userId: req.user
   });
   product
     .save()
     .then(result => {
-      // console.log(result);
-      console.log('Created Product');
-      res.redirect('/products_04');
+      res.redirect('/products_05');
     })
     .catch(err => {
       console.log(err);
@@ -35,19 +35,20 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
-    return res.redirect('/main_04');
+    return res.redirect('/main_05');
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
       if (!product) {
-        return res.redirect('/main_04');
+        return res.redirect('/main_05');
       }
-      res.render('prove/PR04/admin/edit-product', {
+      res.render('prove/PR05/admin/edit-product', {
         pageTitle: 'Edit Product',
         path: '/edit-product',
         editing: editMode,
-        product: product
+        product: product,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -69,7 +70,7 @@ exports.postEditProduct = (req, res, next) => {
   })
     .then(result => {
       console.log('UPDATED PRODUCT!');
-      res.redirect('/admin/products_04');
+      res.redirect('/admin/products_05');
     })
     .catch(err => console.log(err));
 };
@@ -80,10 +81,11 @@ exports.getProducts = (req, res, next) => {
     // .populate('userId', 'name')
     .then(products => {
       console.log(products);
-      res.render('./prove/PR04/admin/products', {
+      res.render('./prove/PR05/admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
-        path: '/admin/products'
+        path: '/admin/products',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -94,7 +96,7 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
-      res.redirect('/admin/products_04');
+      res.redirect('/admin/products_05');
     })
     .catch(err => console.log(err));
 };

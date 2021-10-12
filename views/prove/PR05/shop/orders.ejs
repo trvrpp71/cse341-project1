@@ -1,0 +1,51 @@
+<%- include('../includes/head.ejs') %>
+    
+    </head>
+
+    <body>
+        <%- include('../includes/nav2.ejs') %>
+
+
+        <main>
+        
+            <div class="w-75 mx-auto">
+
+                <% if (orders.length <= 0) { %>
+                    <h1>Nothing there!</h1>
+                <% } else { %>
+
+
+                        <% orders.forEach(order => { %>
+                            <table class="table">
+                                <thead>
+                                    <th class="h3" scope="row">Order: <%= order._id %></th>
+                                </thead>
+
+                                <tbody>
+
+                                    <table class="table mb-5">
+                                        <thead>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Price</th>
+                                        </thead>
+                                        <% order.products.forEach(p => { %>
+                                            <tbody>
+
+                                                <td><%= p.product.title %></td>
+                                                <td><%= p.quantity %></td>
+                                                <td><%= p.product.price %></td>
+                                        <% }) %>
+                                        </tbody>
+                                    </table>
+
+                                </tbody>
+                                
+                            <% }) %> 
+                    </table>
+                    
+                <% } %>
+            </div>
+        </main>
+
+        <%- include('../includes/end.ejs') %>

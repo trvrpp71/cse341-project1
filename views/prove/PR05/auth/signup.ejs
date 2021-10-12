@@ -10,7 +10,9 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-4">
-
+                    <% if (errorMessage) { %> 
+                        <div class="mb-3"><%= errorMessage %> </div>
+                    <% } %>
                     <form action="/signup" method="POST">
 
                         <div class="form-group mb-3">
@@ -25,7 +27,7 @@
                             <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password">
                         </div>
                         <button class="btn btn-outline-primary mt-2" type="submit">Signup</button>
-
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     </form>
 
                 </div>

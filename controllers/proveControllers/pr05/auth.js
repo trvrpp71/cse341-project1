@@ -2,21 +2,32 @@ const User = require('../../../models/proveModels/user');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('./prove/PR05/auth/login', {
     pageTitle: 'Login Wk05',
     path: '/login',
-    isAuthenticated: false
+    errorMessage: message
   });
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('./prove/PR05/auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    isAuthenticated: false
+    errorMessage: message
   });
 };
-
 
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
@@ -25,6 +36,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne( {email:email })
     .then(user => {
       if (!user) {
+        req.flash('error', 'Invalid email or password.');
         return res.redirect('/login');
       }
       //now validate email
@@ -39,6 +51,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/products_05');
             });
           }
+          req.flash('error', 'Invalid email or password.');
           res.redirect('/login');
         });
       }) 
@@ -59,6 +72,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({email: email})
     .then(userDoc => {
       if(userDoc) {
+        req.flash('error', 'That email is already registered. Please choose a different one.');
         return res.redirect('/signup');
       }
       return bcrypt

@@ -7,8 +7,7 @@ exports.getProducts = (req, res, next) => {
       res.render('./prove/PR05/shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/products'
       });
     })
     .catch(err => {
@@ -24,8 +23,8 @@ exports.getProduct = (req, res, next) => {
       res.render('./prove/PR05/shop/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/products'
+        
       });
     })
     .catch(err => console.log(err));
@@ -37,8 +36,7 @@ exports.getIndex = (req, res, next) => {
       res.render('./prove/PR05/index', {
         prods: products,
         pageTitle: 'Shop Home',
-        path: '/shop',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/shop'
       });
     })
     .catch(err => {
@@ -54,8 +52,8 @@ exports.getCart = (req, res, next) => {
       res.render('./prove/PR05/shop/cart', {
         path: '/cart_05',
         pageTitle: 'Your Cart',
-        products: products,
-        isAuthenticated: req.session.isLoggedIn
+        products: products
+
       });
     })
     .catch(err => console.log(err));
@@ -94,7 +92,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products
@@ -107,8 +105,7 @@ exports.postOrder = (req, res, next) => {
     .then(() => {
       res.render('./prove/PR05/shop/order_ack', {
         pageTitle: 'Thank you',
-        path:'/main_05',
-        isAuthenticated: req.session.isLoggedIn
+        path:'/main_05'
       });
     })
     .catch(err => console.log(err));
@@ -120,8 +117,7 @@ exports.getOrders = (req, res, next) => {
         res.render('./prove/PR05/shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders,
-        isAuthenticated: req.session.isLoggedIn
+        orders: orders
       });
     })
     .catch(err => console.log(err));

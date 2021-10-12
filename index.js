@@ -3,6 +3,8 @@ const bodyParser = require ('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 // package info - https://github.com/expressjs/session
 const session = require('express-session');
@@ -27,11 +29,10 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 
+const csrfProtect = csrf();
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
-
-const routes = require('./routes');
-const User = require('./models/proveModels/user');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -45,6 +46,8 @@ app.use(
   })
 );
 
+app.use(csrfProtect);
+app.use(flash());
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -58,8 +61,14 @@ app.use((req, res, next) => {
   .catch(err => console.log(err));
 })
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
-
+const routes = require('./routes');
+const User = require('./models/proveModels/user');
 
 app.use('/', routes);
 

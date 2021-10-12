@@ -5,8 +5,7 @@ exports.getAddProduct = (req, res, next) => {
   res.render('./prove/PR05/admin/edit-product', {
     pageTitle: 'Add Product wk5',
     path: '/add-product',
-    editing: false,
-    isAuthenticated: req.session.isLoggedIn
+    editing: false
   });
 };
 
@@ -47,8 +46,7 @@ exports.getEditProduct = (req, res, next) => {
         pageTitle: 'Edit Product',
         path: '/edit-product',
         editing: editMode,
-        product: product,
-        isAuthenticated: req.session.isLoggedIn
+        product: product
       });
     })
     .catch(err => console.log(err));
@@ -84,8 +82,7 @@ exports.getProducts = (req, res, next) => {
       res.render('./prove/PR05/admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
-        path: '/admin/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/admin/products'
       });
     })
     .catch(err => console.log(err));

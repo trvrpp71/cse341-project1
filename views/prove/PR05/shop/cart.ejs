@@ -30,6 +30,7 @@
                                     <td>$<%= p.productId.price %></td>
                                     <td>
                                         <form action="/cart-delete-item_05" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" value="<%= p.productId._id %>" name="productId">
                                             <button type="submit">Delete</button>
                                         </form>
@@ -41,6 +42,7 @@
 
                     <div class="text-center">
                         <form action="/create-order_05" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button type="submit" class="btn btn-primary">Order Now!</button>
                         </form>
                     </div>

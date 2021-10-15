@@ -76,19 +76,7 @@ app.use('/', routes);
 mongoose
   .connect(MONGODB_URL)
   .then(result => {
-      //user creation now done via signup 
-      // User.findOne().then(user => {
-      //   if (!user) {
-      //     const user = new User({
-      //       name:'test_user',
-      //       email: 'test@test.com',
-      //       cart: {
-      //         items: []
-      //       }
-      //     });
-      //     user.save();
-      //   }
-      // })
+
     app.listen(PORT, () => {console.log(`listening on port ${PORT}`)});
   })   
  .catch(err => {console.log(err) });

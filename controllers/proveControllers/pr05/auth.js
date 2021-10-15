@@ -1,5 +1,13 @@
 const User = require('../../../models/proveModels/user');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const sendGridTransport = require('nodemailer-sendgrid-transport');
+
+const transporter = nodemailer.createTransport(sendGridTransport( {
+  auth: {
+    api_key:'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'
+  }
+}));
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -86,6 +94,12 @@ exports.postSignup = (req, res, next) => {
           return user.save(); 
         })
         .then(result => {
+          transporter.sendMail({
+            to: email,
+            from: 'trvrpp71@byui.edu',
+            subject:"Signup Success!",
+            html:'<h1> Thank you for signing up!</h1>'
+          })
           res.redirect('/login');
         });
     })

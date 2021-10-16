@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const transporter = nodemailer.createTransport(sendGridTransport( {
   auth: {
     // api_key:'THIS IS DUMMY CODE FOR GITHUB PUSH TO COMPLY WITH SENDGRID SECURITY REQUIRMENTS.'
-    api_key:'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'
+
   }
 }));
 /*------------- GET exports -------------------*/

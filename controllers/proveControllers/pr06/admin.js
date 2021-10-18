@@ -1,9 +1,26 @@
 const Product = require('../../../models/proveModels/product');
 
+/*--------------------------------------------------*/
+
+exports.getProducts = (req, res, next) => {
+  Product.find( { userId: req.user._id } )
+    .then(products => {
+      console.log(products);
+      res.render('./prove/pr06/admin/products', {
+        prods: products,
+        pageTitle: 'Admin Products',
+        path: '/admin/products'
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+/*--------------------------------------------------*/
+
 exports.getAddProduct = (req, res, next) => {
 
   res.render('./prove/pr06/admin/edit-product', {
-    pageTitle: 'Add Product wk5',
+    pageTitle: 'Add Product wk6',
     path: '/add-product',
     editing: false
   });
@@ -30,6 +47,10 @@ exports.postAddProduct = (req, res, next) => {
       console.log(err);
     });
 };
+
+
+/*--------------------------------------------------*/
+
 
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
@@ -60,37 +81,30 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDescription = req.body.description;
 
   Product.findById(prodId).then(product => {
+    if (product.userId.toString() !== req.user._id.toString()) {
+      return res.redirect('/main_06');
+    }
     product.title = updatedTitle;
     product.price = updatedPrice;
     product.description = updatedDescription;
     product.imageUrl = updatedImageUrl;
-    return product.save();
-  })
-    .then(result => {
+    return product.save().then(result => {
       console.log('UPDATED PRODUCT!');
       res.redirect('/admin/products_06');
     })
+  })
+
     .catch(err => console.log(err));
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.find()
-    // .select('title price -_id')
-    // .populate('userId', 'name')
-    .then(products => {
-      console.log(products);
-      res.render('./prove/pr06/admin/products', {
-        prods: products,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
-      });
-    })
-    .catch(err => console.log(err));
-};
+
+/*--------------------------------------------------*/
+
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByIdAndRemove(prodId)
+
+  Product.deleteOne( { _id: prodId, userId: req.user._id })
     .then(() => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products_06');

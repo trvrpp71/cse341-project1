@@ -10,6 +10,7 @@ const pr06Routes = require('./pr06/pr06index');
 pRoutes.use(pr02Routes);
 pRoutes.use(pr03Routes);
 pRoutes.use(pr04Routes);
+pRoutes.use(pr05Routes);
 pRoutes.use(pr06Routes);
 
 module.exports = pRoutes;

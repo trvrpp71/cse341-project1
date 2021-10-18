@@ -7,21 +7,25 @@ const pr06AuthController = require('../../../controllers/proveControllers/pr06/a
 
 router.get('/login_06', pr06AuthController.getLogin);
 
+router.post('/login_06', pr06AuthController.postLogin);
+
+
 router.get('/signup_06', pr06AuthController.getSignup);
 
-router.get('/reset', pr06AuthController.getReset);
-
-router.get('/reset:token', pr06AuthController.getNewPassword);
-
-router.post('/login', pr06AuthController.postLogin);
-
-router.post('/logout', pr06AuthController.postLogout);
-
-router.post('/signup', pr06AuthController.postSignup);
-
-router.post('/reset', pr06AuthController.postReset);
+router.post('/signup_06', pr06AuthController.postSignup);
 
 
+router.get('/reset_06', pr06AuthController.getReset);
+
+router.post('/reset_06', pr06AuthController.postReset);
+
+
+router.get('/reset_06/:token', pr06AuthController.getNewPassword);
+
+router.post('/new-password', pr06AuthController.postNewPassword);
+
+
+router.post('/logout_06', pr06AuthController.postLogout);
 
 
 module.exports = router;

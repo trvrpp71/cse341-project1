@@ -2,6 +2,8 @@ const User = require('../../../models/proveModels/user');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendGridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator/check')
+
 const crypto = require('crypto'); 
 
 const transporter = nodemailer.createTransport(sendGridTransport( {
@@ -32,6 +34,15 @@ exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()){
+    res.render('./prove/pr06/auth/login', {
+      pageTitle: 'Login Wk06',
+      path: '/login_06',
+      errorMessage: errors.array()[0].msg
+    });
+  }
   User.findOne( {email:email })
     .then(user => {
       if (!user) {
@@ -75,40 +86,39 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
+ 
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    console.log(errors.array());
+    return res.status(422).render('./prove/pr06/auth/signup', {
+      path: '/signup_06',
+      pageTitle: 'Signup Wk6',
+      errorMessage: errors.array()[0].msg
+    });
+  }
 
   //determine if email already exists
-  User.findOne({email: email})
-    .then(userDoc => {
-      if(userDoc) {
-        req.flash('error', 'That email is already registered. Please choose a different one.');
-        return res.redirect('/signup_06');
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then(hashedPassword => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            cart: { items: []}
-          });
-          return user.save(); 
-        })
-        .then(result => {
-          transporter.sendMail({
-            to: email,
-            from: 'trvrpp71@byui.edu',
-            subject:"Signup Success!",
-            html:'<h1> Thank you for signing up!</h1>'
-          })
-          res.redirect('/login_06');
-        });
+  bcrypt
+    .hash(password, 12)
+    .then(hashedPassword => {
+      const user = new User({
+        email: email,
+        password: hashedPassword,
+        cart: { items: []}
+      });
+      return user.save(); 
     })
-    
-    .catch(err => {
-      console.log(err);
+    .then(result => {
+      transporter.sendMail({
+        to: email,
+        from: 'trvrpp71@byui.edu',
+        subject:"Signup Success!",
+        html:'<h1> Thank you for signing up!</h1>'
+      })
+      res.redirect('/login_06');
     });
-};
+ };
 
 /*------------------------------------------------------------------*/
 

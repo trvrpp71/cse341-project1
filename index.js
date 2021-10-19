@@ -8,8 +8,6 @@ const flash = require('connect-flash');
 
 require('dotenv').config(); //to hid the API key in the .env file
 
-
-
 // package info - https://github.com/expressjs/session
 const session = require('express-session');
 

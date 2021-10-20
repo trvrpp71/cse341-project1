@@ -26,7 +26,12 @@ exports.getLogin = (req, res, next) => {
   res.render('./prove/pr06/auth/login', {
     pageTitle: 'Login Wk06',
     path: '/login_06',
-    errorMessage: message
+    errorMessage: message,
+    oldInput: { 
+      email: '', 
+      password: ''
+    },
+    validationErrors: []
   });
 };
 
@@ -37,19 +42,33 @@ exports.postLogin = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()){
-    res.render('./prove/pr06/auth/login', {
+    res.status(422).render('./prove/pr06/auth/login', {
       pageTitle: 'Login Wk06',
       path: '/login_06',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: { 
+        email: email, 
+        password: password
+      },
+      validationErrors: errors.array()
     });
   }
+  //validate email
   User.findOne( {email:email })
     .then(user => {
       if (!user) {
-        req.flash('error', 'Invalid email or password.');
-        return res.redirect('/login_06');
+        res.status(422).render('./prove/pr06/auth/login', {
+          pageTitle: 'Login Wk06',
+          path: '/login_06',
+          errorMessage: 'Invalid Email or Password',
+          oldInput: { 
+            email: email, 
+            password: password
+          },
+          validationErrors: []
+        });
       }
-      //now validate email
+      //now validate password
       bcrypt
         .compare(password, user.password)
         .then(doMatch => {
@@ -61,10 +80,21 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/products_06');
             });
           }
-          req.flash('error', 'Invalid email or password.');
-          res.redirect('/login_06');
-        });
-      }) 
+          res.status(422).render('./prove/pr06/auth/login', {
+            pageTitle: 'Login Wk06',
+            path: '/login_06',
+            errorMessage: 'Invalid Email or Password',
+            oldInput: { 
+              email: email, 
+              password: password
+            },
+            validationErrors: []
+          });
+        })
+    .catch(err => {
+      console.log(err);
+    });
+  }) 
 }
 
 /*------------------------------------------------------------------*/
@@ -79,9 +109,17 @@ exports.getSignup = (req, res, next) => {
   res.render('./prove/pr06/auth/signup', {
     path: '/signup_06',
     pageTitle: 'Signup Wk6',
-    errorMessage: message
+    errorMessage: message,
+    oldInput: {
+      email: '',
+      password: '',
+      confirmPassword: ''
+    },
+    validationErrors: []
   });
 };
+
+
 
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
@@ -90,11 +128,17 @@ exports.postSignup = (req, res, next) => {
   const errors = validationResult(req);
 
   if(!errors.isEmpty()){
-    console.log(errors.array());
+
     return res.status(422).render('./prove/pr06/auth/signup', {
       path: '/signup_06',
       pageTitle: 'Signup Wk6',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: { 
+        email: email, 
+        password: password, 
+        confirmPassword: req.body.confirmPassword
+      },
+      validationErrors: errors.array()
     });
   }
 
@@ -109,15 +153,15 @@ exports.postSignup = (req, res, next) => {
       });
       return user.save(); 
     })
-    .then(result => {
-      transporter.sendMail({
-        to: email,
-        from: 'trvrpp71@byui.edu',
-        subject:"Signup Success!",
-        html:'<h1> Thank you for signing up!</h1>'
-      })
+    // .then(result => {
+    //   transporter.sendMail({
+    //     to: email,
+    //     from: 'trvrpp71@byui.edu',
+    //     subject:"Signup Success!",
+    //     html:'<h1> Thank you for signing up!</h1>'
+    //   })
       res.redirect('/login_06');
-    });
+    // });
  };
 
 /*------------------------------------------------------------------*/

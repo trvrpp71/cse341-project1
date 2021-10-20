@@ -16,11 +16,23 @@
                     <form action="/login_06" method="POST">
 
                         <div class="form-group mb-3">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            <input 
+                                type="email" 
+                                class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" 
+                                name="email" 
+                                id="email" 
+                                placeholder="Email"
+                                value=" <%= oldInput.email %> ">
                         </div>
 
                         <div class="form-group mb-3">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            <input 
+                                type="password" 
+                                class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" 
+                                name="password" 
+                                id="password" 
+                                placeholder="Password"
+                                value="<%= oldInput.password %>">
                         </div>
 
                         <button class="btn btn-outline-primary mt-2" type="submit">Login</button>

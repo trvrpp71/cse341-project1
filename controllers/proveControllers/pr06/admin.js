@@ -1,7 +1,6 @@
 const Product = require('../../../models/proveModels/product');
 const { validationResult } = require('express-validator/check');
 
-
 /*--------------------------------------------------*/
 
 exports.getProducts = (req, res, next) => {
@@ -67,10 +66,14 @@ exports.postAddProduct = (req, res, next) => {
   product
     .save()
     .then(result => {
+      console.log('Product Created');
       res.redirect('/products_06');
     })
     .catch(err => {
-      console.log(err);
+      // res.redirect('/500');
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -99,7 +102,11 @@ exports.getEditProduct = (req, res, next) => {
         validationErrors: []
       })
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -143,7 +150,11 @@ exports.postEditProduct = (req, res, next) => {
       res.redirect('/admin/products_06');
     })
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
 };
 
 
@@ -158,5 +169,9 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products_06');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };

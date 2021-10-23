@@ -52,6 +52,19 @@ app.use(csrfProtect);
 app.use(flash());
 
 app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+const routes = require('./routes');
+const User = require('./models/proveModels/user');
+
+app.use('/', routes);
+
+
+app.use((req, res, next) => {
+  //throw new Error('sync dummy');
   if (!req.session.user) {
     return next();
   }
@@ -69,10 +82,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const routes = require('./routes');
-const User = require('./models/proveModels/user');
 
-app.use('/', routes);
 
 
 mongoose

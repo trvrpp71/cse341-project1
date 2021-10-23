@@ -57,6 +57,10 @@ app.use((req, res, next) => {
   next();
 });
 
+const routes = require('./routes');
+const User = require('./models/proveModels/user');
+
+app.use('/', routes);
 
 app.use((req, res, next) => {
   //throw new Error('sync dummy');
@@ -79,15 +83,6 @@ app.use((req, res, next) => {
     })
   });
 })
-
-
-
-const routes = require('./routes');
-const User = require('./models/proveModels/user');
-
-app.use('/', routes);
-
-
 
 mongoose
   .connect(MONGODB_URL)

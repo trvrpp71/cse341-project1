@@ -9,7 +9,7 @@ routes.use(teamRoutes);
 
 routes.get('/', (req, res, next) => {
     //primary index page, always handled last
-    res.render('./index', {
+    res.render('./prove/pr06/index', {
         pageTitle: "Home", 
         path: '/',
     });

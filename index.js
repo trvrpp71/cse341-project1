@@ -2,17 +2,16 @@ const express = require('express');
 const bodyParser = require ('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const cors = require('cors');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
-require('dotenv').config(); //to hid the API key in the .env file
+const User = require('./models/proveModels/user');
 
-// package info - https://github.com/expressjs/session
-const session = require('express-session');
+// require('dotenv').config(); //to hid the API key in the .env file
 
-// package documentation - https://www.npmjs.com/package/connect-mongo
-const MongoDBStore = require('connect-mongodb-session')(session);
 
 const corsOptions = {
   origin: "https://vast-shore-53604.herokuapp.com/",
@@ -52,6 +51,12 @@ app.use(csrfProtect);
 app.use(flash());
 
 app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
@@ -63,14 +68,7 @@ app.use((req, res, next) => {
   .catch(err => console.log(err));
 })
 
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
-
 const routes = require('./routes');
-const User = require('./models/proveModels/user');
 
 app.use('/', routes);
 

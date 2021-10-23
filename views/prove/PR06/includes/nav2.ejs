@@ -30,7 +30,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products_06">Admin Products
+                        <a class="nav-link <%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products_06">Edit/Delete Items
                         </a>
                     </li>
                 <% } %>
@@ -51,7 +51,7 @@
                     </li>
                 <% } else { %>
                     <li class="nav-item">
-                        <form action="/logout_06" method="POST">
+                        <form action="/logout" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button class="btn btn-secondary-outline">Logout</button>
                         </form>

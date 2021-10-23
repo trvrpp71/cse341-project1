@@ -8,12 +8,11 @@ const crypto = require('crypto');
 
 const transporter = nodemailer.createTransport(sendGridTransport( {
   auth: {
+    // api_key:'THIS IS DUMMY CODE FOR GITHUB PUSH TO COMPLY WITH SENDGRID SECURITY REQUIRMENTS.'
     api_key: process.env.API_KEY
   }
 }));
-
-
-/*------------------------------------------------------------------*/
+/*------------- GET exports -------------------*/
 
 
 exports.getLogin = (req, res, next) => {
@@ -23,8 +22,9 @@ exports.getLogin = (req, res, next) => {
   } else {
     message = null;
   }
-  res.render('./prove/pr06/auth/login', {
+  res.render('./prove/pr06/auth/login_06', {
     pageTitle: 'Login Wk06',
+<<<<<<< HEAD
     path: '/login_06',
     errorMessage: message,
     oldInput: { 
@@ -32,8 +32,67 @@ exports.getLogin = (req, res, next) => {
       password: ''
     },
     validationErrors: []
+=======
+    path: '/login',
+    errorMessage: message
   });
 };
+
+exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('./prove/pr06/auth/signup_06', {
+    path: '/signup',
+    pageTitle: 'Signup Wk6',
+    errorMessage: message
+>>>>>>> parent of 48afb78 (advanced authenication done)
+  });
+};
+
+exports.getReset = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('./prove/pr06/auth/reset_06', {
+    path: '/reset',
+    pageTitle: 'Reset Password',
+    errorMessage: message
+  });
+}
+
+exports.getNewPassword = (req, res, next) => {
+  const token = req.params.token;
+  User.findOne({resetToken: token, resetTokenExp: {$gt: Date.now() } })
+    .then(user => {
+      let message = req.flash('error');
+      if (message.length > 0) {
+        message = message[0];
+      } else {
+        message = null;
+      }
+      res.render('./prove/pr06/auth/new-password_06', {
+        path: '/new_password',
+        pageTitle: 'Set New Password',
+        errorMessage: message,
+        userId: user._id.toString()
+      });
+    })
+    
+    .catch(err => {
+        console.log(err)
+    });
+
+
+}
+/*------------- POST exports -------------------*/
+
 
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
@@ -97,6 +156,7 @@ exports.postLogin = (req, res, next) => {
   }) 
 }
 
+<<<<<<< HEAD
 /*------------------------------------------------------------------*/
 
 exports.getSignup = (req, res, next) => {
@@ -117,6 +177,12 @@ exports.getSignup = (req, res, next) => {
     },
     validationErrors: []
   });
+=======
+exports.postLogout = (req, res, next) => {
+    req.session.destroy(() => {
+      res.redirect('/main_06')
+    })
+>>>>>>> parent of 48afb78 (advanced authenication done)
 };
 
 
@@ -143,6 +209,7 @@ exports.postSignup = (req, res, next) => {
   }
 
   //determine if email already exists
+<<<<<<< HEAD
   bcrypt
     .hash(password, 12)
     .then(hashedPassword => {
@@ -152,6 +219,33 @@ exports.postSignup = (req, res, next) => {
         cart: { items: []}
       });
       return user.save(); 
+=======
+  User.findOne({email: email})
+    .then(userDoc => {
+      if(userDoc) {
+        req.flash('error', 'That email is already registered. Please choose a different one.');
+        return res.redirect('/signup_06');
+      }
+      return bcrypt
+        .hash(password, 12)
+        .then(hashedPassword => {
+          const user = new User({
+            email: email,
+            password: hashedPassword,
+            cart: { items: []}
+          });
+          return user.save(); 
+        })
+        .then(result => {
+          transporter.sendMail({
+            to: email,
+            from: 'trvrpp71@byui.edu',
+            subject:"Signup Success!",
+            html:'<h1> Thank you for signing up!</h1>'
+          })
+          res.redirect('/login');
+        });
+>>>>>>> parent of 48afb78 (advanced authenication done)
     })
     // .then(result => {
     //   transporter.sendMail({
@@ -164,22 +258,6 @@ exports.postSignup = (req, res, next) => {
     // });
  };
 
-/*------------------------------------------------------------------*/
-
-
-exports.getReset = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
-  res.render('./prove/pr06/auth/reset', {
-    path: '/reset_06',
-    pageTitle: 'Reset Password Wk6',
-    errorMessage: message
-  });
-}
 
 
 exports.postReset = (req, res, next) => { 
@@ -188,21 +266,21 @@ exports.postReset = (req, res, next) => {
 
     if (err) {
       console.log(err);
-      return res.redirect('/login_06'); 
+      return res.redirect('/login'); 
     }
 
     const token = buffer.toString('hex');
-
+    
     User.findOne( { email: req.body.email } )
 
       .then(user => {
         if (!user) {
           req.flash('error', "No account with that email is found.");
-          return res.redirect('/reset_06');
+          return res.redirect('/login_06');
         };
 
         user.resetToken = token;
-        user.resetTokenExpiration = Date.now() + 3600000; //3600000 is 1 hr in milliseconds
+        user.resetTokenExp = Date.now() + 3600000; //3600000 is 1 hr in milliseconds
         return user.save();
       })
 
@@ -228,68 +306,3 @@ exports.postReset = (req, res, next) => {
     })
 
 }
-
-
-/*------------------------------------------------------------------*/
-
-exports.getNewPassword = (req, res, next) => {
-  const token = req.params.token;
-
-  User.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now() } })
-    .then(user => {
-      let message = req.flash('error');
-      if (message.length > 0) {
-        message = message[0];
-      } else {
-        message = null;
-      }
-      res.render('./prove/pr06/auth/new-password', {
-        path: '/new-password',
-        pageTitle: 'Set New Password Wk6',
-        errorMessage: message,
-        userId: user._id.toString(),
-        passwordToken: token
-      });
-    })
-    
-    .catch(err => {
-        console.log(err)
-    });
-}
-
-exports.postNewPassword = (req, res, next) => {
-  const newPassword = req.body.password;
-  const userId = req.body.userId;
-  const passwordToken = req.body.passwordToken;
-  let resetUser;
-
-  User.findOne( { 
-    resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() },
-    _id: userId
-  }).then(user => {
-    resetUser = user;
-    return bcrypt.hash(newPassword, 12);
-  })
-  .then(hashedPassword => {
-    resetUser.password = hashedPassword;
-    resetUser.resetToken = undefined;
-    resetUser.resetTokenExpiration = undefined;
-    return resetUser.save();
-  })
-  .then(result => {
-    res.redirect('/login_06');
-  })
-  .catch(err => {
-    console.log(err)
-  })
-
-}
-/*--------------------------------------------*/
-
-
-exports.postLogout = (req, res, next) => {
-  req.session.destroy(() => {
-    res.redirect('/main_06')
-  })
-};

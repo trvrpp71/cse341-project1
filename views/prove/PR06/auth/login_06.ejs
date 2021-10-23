@@ -1,4 +1,4 @@
-<%- include('../../../includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 
 </head>
 
@@ -13,11 +13,11 @@
                     <% if (errorMessage) { %> 
                         <div class="mb-3"><%= errorMessage %> </div>
                     <% } %>
-                    <form action="/signup_06" method="POST" novalidate>
+                    <form action="/login" method="POST">
 
                         <div class="form-group mb-3">
                             <input 
-                                type="email"
+                                type="email" 
                                 class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" 
                                 name="email" 
                                 id="email" 
@@ -27,25 +27,22 @@
 
                         <div class="form-group mb-3">
                             <input 
-                                type="password"
-                                class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
-                                name="password"
-                                id="password"
+                                type="password" 
+                                class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" 
+                                name="password" 
+                                id="password" 
                                 placeholder="Password"
-                                value = " <%= oldInput.password %> ">
+                                value="<%= oldInput.password %>">
                         </div>
 
-                        <div class="form-group mb-3">
-                            <input 
-                                type="password"
-                                class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>" 
-                                name="confirmPassword" 
-                                id="confirmPassword"
-                                placeholder="Confirm Password">
-                        </div>
-                        <button class="btn btn-outline-primary mt-2" type="submit">Signup</button>
+                        <button class="btn btn-outline-primary mt-2" type="submit">Login</button>
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     </form>
+
+                    <div class="col mt-3">
+                        <a href="/reset">Reset Password</a>
+                    </div>
+
 
                 </div>
             </div>    
@@ -53,4 +50,4 @@
 
 
     </main>
-<%- include('../../../includes/end.ejs') %>
+<%- include('../includes/end.ejs') %>

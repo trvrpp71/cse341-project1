@@ -34,7 +34,7 @@ exports.getIndex = (req, res, next) => {
   Product.find()
     .then(products => {
       res.render('./prove/pr06/index', {
-        prods: products,
+        // prods: products,
         pageTitle: 'Shop Home',
         path: '/shop'
       });

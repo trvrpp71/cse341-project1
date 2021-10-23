@@ -15,11 +15,6 @@ routes.get('/', (req, res, next) => {
     });
 })
 
-routes.use((req,res,next) => {
-    res.render('404error', {
-        pageTitle: '404 - Not found',
-        path: req.url
-    });
-})
+
 
 module.exports = routes;

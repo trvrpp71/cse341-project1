@@ -1,7 +1,7 @@
 const User = require('../../../models/proveModels/user');
 const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
-const sendGridTransport = require('nodemailer-sendgrid-transport');
+// const nodemailer = require('nodemailer');
+// const sendGridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator/check')
 
 const crypto = require('crypto'); 
@@ -93,8 +93,14 @@ exports.postLogin = (req, res, next) => {
         })
     .catch(err => {
       console.log(err);
+      res.redirect('/login_06')
     });
-  }) 
+  })
+  .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }); 
 }
 
 /*------------------------------------------------------------------*/
@@ -107,8 +113,8 @@ exports.getSignup = (req, res, next) => {
     message = null;
   }
   res.render('./prove/pr06/auth/signup', {
-    path: '/signup_06',
-    pageTitle: 'Signup Wk6',
+    path: '/signup',
+    pageTitle: 'Signup',
     errorMessage: message,
     oldInput: {
       email: '',
@@ -128,7 +134,7 @@ exports.postSignup = (req, res, next) => {
   const errors = validationResult(req);
 
   if(!errors.isEmpty()){
-
+    console.log(errors.array());
     return res.status(422).render('./prove/pr06/auth/signup', {
       path: '/signup_06',
       pageTitle: 'Signup Wk6',
@@ -141,8 +147,6 @@ exports.postSignup = (req, res, next) => {
       validationErrors: errors.array()
     });
   }
-
-  //determine if email already exists
   bcrypt
     .hash(password, 12)
     .then(hashedPassword => {
@@ -153,15 +157,21 @@ exports.postSignup = (req, res, next) => {
       });
       return user.save(); 
     })
-    // .then(result => {
+    .then(result => {
+      res.redirect('/login_06');
     //   transporter.sendMail({
     //     to: email,
     //     from: 'trvrpp71@byui.edu',
     //     subject:"Signup Success!",
     //     html:'<h1> Thank you for signing up!</h1>'
     //   })
-      res.redirect('/login_06');
-    // });
+
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
  };
 
 /*------------------------------------------------------------------*/

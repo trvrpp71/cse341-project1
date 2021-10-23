@@ -6,11 +6,11 @@ const { validationResult } = require('express-validator/check')
 
 const crypto = require('crypto'); 
 
-const transporter = nodemailer.createTransport(sendGridTransport( {
-  auth: {
-    api_key: process.env.API_KEY
-  }
-}));
+// const transporter = nodemailer.createTransport(sendGridTransport( {
+//   auth: {
+//     api_key: process.env.API_KEY
+//   }
+// }));
 
 
 /*------------------------------------------------------------------*/
@@ -207,18 +207,18 @@ exports.postReset = (req, res, next) => {
       })
 
       .then(result => {
-        req.flash('error', "An email was sent to your account to enable a password reset.")
+        req.flash('error', "The email doesn't work ")
         res.redirect('/login_06')
-        transporter.sendMail({
-          to: req.body.email,
-          from: 'trvrpp71@byui.edu',
-          subject:"Password Reset",
-          html:`
-            <p>You requested to reset your password.</p>
-            <p> Click this <a href="http://localhost:5000/reset_06/${token}">link</a> to reset the password. </p>
-            <p> This link is good for one hour </p>
-          `
-        })
+        // transporter.sendMail({
+        //   to: req.body.email,
+        //   from: 'trvrpp71@byui.edu',
+        //   subject:"Password Reset",
+        //   html:`
+        //     <p>You requested to reset your password.</p>
+        //     <p> Click this <a href="http://localhost:5000/reset_06/${token}">link</a> to reset the password. </p>
+        //     <p> This link is good for one hour </p>
+        //   `
+        // })
       })
 
       .catch(err => {

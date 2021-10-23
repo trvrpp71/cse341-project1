@@ -12,4 +12,4 @@ Dockerfile
 docker-compose.yml
 
 #folders
-archive
+archive/

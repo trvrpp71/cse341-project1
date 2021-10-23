@@ -31,17 +31,22 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.find()
-    .then(products => {
-      res.render('./prove/pr06/index', {
-        // prods: products,
-        pageTitle: 'Shop Home',
-        path: '/shop'
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  // Product.find()
+  //   .then(products => {
+  //     res.render('./prove/pr06/index', {
+  //       // prods: products,
+  //       pageTitle: 'Shop Home',
+  //       path: '/shop'
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  res.render('./prove/pr06/index', {
+    pageTitle: 'Intro Page', 
+    path: '/shop'
+  });
+
 };
 
 exports.getCart = (req, res, next) => {

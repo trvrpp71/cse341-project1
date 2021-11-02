@@ -1,5 +1,9 @@
-const Product = require('../models/product');
+//const mongoose = require('mongoose');
+
 const { validationResult } = require('express-validator/check');
+
+const Product = require('../models/product');
+
 
 
 /*--------------------------------------------------*/
@@ -8,7 +12,7 @@ exports.getProducts = (req, res, next) => {
   Product.find( { userId: req.user._id } )
     .then(products => {
       console.log(products);
-      res.render('./admin/products', {
+      res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products'
@@ -20,8 +24,7 @@ exports.getProducts = (req, res, next) => {
 /*--------------------------------------------------*/
 
 exports.getAddProduct = (req, res, next) => {
-
-  res.render('./admin/edit-product', {
+  res.render('admin/edit-product', {
     pageTitle: 'Add Product ',
     path: '/admin/add-product',
     editing: false,
@@ -39,7 +42,7 @@ exports.postAddProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('./admin/edit-product', {
+    return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product ',
       path: '/admin/add-product',
       editing: false,
@@ -67,7 +70,7 @@ exports.postAddProduct = (req, res, next) => {
   product
     .save()
     .then(result => {
-      res.redirect('/products');
+      res.redirect('/admin/products');
     })
     .catch(err => {
       console.log(err);
@@ -81,17 +84,17 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
-    return res.redirect('/main');
+    return res.redirect('/');
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
       if (!product) {
-        return res.redirect('/main');
+        return res.redirect('/');
       }
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
-        path: '/edit-product',
+        path: '/admin/edit-product',
         editing: editMode,
         hasError: false,
         product: product,
@@ -112,7 +115,7 @@ exports.postEditProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('./admin/edit-product', {
+    return res.status(422).render('admin/edit-product', {
       pageTitle: 'EditProduct ',
       path: '/admin/edit-product',
       editing: true,
@@ -132,7 +135,7 @@ exports.postEditProduct = (req, res, next) => {
   Product.findById(prodId)
     .then(product => {
       if (product.userId.toString() !== req.user._id.toString()) {
-        return res.redirect('/main');
+        return res.redirect('/');
       }
       product.title = updatedTitle;
       product.price = updatedPrice;

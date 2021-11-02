@@ -21,7 +21,7 @@
                                             <div class="btn-group">
                                                 <a href="/products/<%= product._id %>" class="btn btn-outline-primary mx-1">Details</a>
                                                 <% if (isAuthenticated) { %> 
-                                                    <%- include('includes/add-to-cart.ejs', {product: product}) %>
+                                                    <%- include('../includes/add-to-cart.ejs', {product: product}) %>
                                                 <% } %>
                                             </div>
                                             

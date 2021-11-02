@@ -58,7 +58,7 @@ exports.postLogin = (req, res, next) => {
     .then(user => {
       if (!user) {
         res.status(422).render('./auth/login', {
-          pageTitle: 'Login Wk06',
+          pageTitle: 'Login',
           path: '/login',
           errorMessage: 'Invalid Email or Password',
           oldInput: { 
@@ -158,14 +158,13 @@ exports.postSignup = (req, res, next) => {
       return user.save(); 
     })
     .then(result => {
-      res.redirect('/login');
       transporter.sendMail({
         to: email,
         from: 'trvrpp@gmail.com',
         subject:"Signup Success!",
         html:'<h1> Thank you for signing up!</h1>'
       })
-
+      res.redirect('/login');
     })
     .catch(err => {
       const error = new Error(err);
@@ -217,22 +216,27 @@ exports.postReset = (req, res, next) => {
       })
 
       .then(result => {
-        req.flash('error', "The email doesn't work ")
         res.redirect('/login')
         transporter.sendMail({
           to: req.body.email,
-          from: 'trvrpp71@byui.edu',
+          from: 'trvrpp@gmail.com',
           subject:"Password Reset",
           html:`
             <p>You requested to reset your password.</p>
-            <p> Click this <a href="http://localhost:5000/reset/${token}">link</a> to reset the password. </p>
+            <p> Click this <a href="https://vast-shore-53604.herokuapp.com/reset/${token}">link</a> to reset the password. </p>
             <p> This link is good for one hour </p>
           `
         })
       })
 
+      //sub this into line 228 for heroku push
+      //https://vast-shore-53604.herokuapp.com/reset,
+
+
       .catch(err => {
-        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
       });
 
     })
@@ -255,7 +259,7 @@ exports.getNewPassword = (req, res, next) => {
       }
       res.render('./auth/new-password', {
         path: '/new-password',
-        pageTitle: 'Set New Password Wk6',
+        pageTitle: 'Set New Password',
         errorMessage: message,
         userId: user._id.toString(),
         passwordToken: token
@@ -263,7 +267,9 @@ exports.getNewPassword = (req, res, next) => {
     })
     
     .catch(err => {
-        console.log(err)
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 }
 

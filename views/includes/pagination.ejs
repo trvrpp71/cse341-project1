@@ -1,0 +1,22 @@
+<nav>
+    <h5 class="text-center mt-3">Page <%= currentPage %> of <%= lastPage %> </h5>
+    <ul class="pagination justify-content-center mt-2">
+        <% if (currentPage !== 1 && prevPage !== 1) { %>
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <% } %>
+
+        <% if (hasPrevPage) { %>
+            <li class="page-item"><a class="page-link" href="?page=<%=prevPage %>"><%= prevPage %> </a></li>
+          <% } %>
+
+        <li class="page-item active"><a class="page-link" href="?page=<%=currentPage %>"><%= currentPage %></a></li>
+
+        <% if (hasNextPage) { %>
+          <li class="page-item"><a class="page-link" href="?page=<%=nextPage %>"><%= nextPage %> </a></li>
+        <% } %>
+        
+        <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+            <li class="page-item"><a class="page-link" href="?page=<%=lastPage %>"><%= lastPage %> </a></li>
+        <% } %>
+    </ul>
+  </nav>

@@ -1,0 +1,52 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+
+    <%- include('../includes/nav2.ejs') %>
+    <main>
+        <div class="container mt-5">
+            <form action="/json_search" method="POST" class="form-inline">
+                <input type="text" name="searchValue" placeholder="Search titles" class="form-control">
+                 <button type="submit" class="btn btn-primary mt-3">Search</button>
+                <% if(searchedValue.length>0) { %> 
+                    <a type="button" href="/json_search" class="btn btn-default">Clear</a>
+                    <h5>Showing search results for: <% searchValue %></h5>
+                <% } %>
+            </form>
+            <h2 class="mt-3 mb-3">Results</h2>
+            <% for(var i=0; i<data.length; i++) {%>
+                <% if(i % 3==0) { %>
+                  <div class="container">
+                    <% } %>
+                      <div class="card">
+                        <img src="<%= data[i].imageUrl %>" alt="t" class="cardImg">
+                        <div class="cardContainer">
+                          <h4><b>
+                              <%= data[i].name %>
+                            </b></h4>
+                          <h6>
+                            <%= data[i].price %>
+                          </h6>
+                          <p>
+                            <%= data[i].description %>
+                          </p>
+                        </div>
+                        <% if(i % 3==2) { %>
+                      </div>
+                      <% } %>
+                  </div>
+                  <% } %>
+        </div>
+
+        <form class="actions container">
+            <% for(var i=1; i <=numPages; i++) { %>
+                <a href="?page=<%= i %><%= (searchedValue) ? `&searchedValue=${searchedValue}` :  "" %>" class="btn <%= (page==i) ? 'btn-primary' : 'btn-default' %>">
+                  <%= i %>
+                </a>
+                <% } %>
+        </form>
+        
+    </main>
+
+    <%- include('../includes/end.ejs') %>

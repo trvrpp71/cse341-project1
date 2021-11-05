@@ -194,3 +194,7 @@ exports.getInvoice = (req, res, next) => {
 
   }).catch(err => next(err));
 }
+
+exports.getCheckout = (req, res, next) => {
+  
+}

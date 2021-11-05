@@ -60,6 +60,7 @@ app.set('views', path.join(__dirname, 'views'))
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const pr8Routes = require('./routes/pr08');
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -100,6 +101,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
+app.use(pr8Routes);
 
 // app.get('/500', errorController.get500);
 
